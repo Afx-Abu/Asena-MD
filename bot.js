@@ -1,10 +1,3 @@
-/* Copyright (C) 2020 Yusuf Usta.
-
-Licensed under the  GPL-3.0 License;
-you may not use this file except in compliance with the License.
-
-WhatsAsena - Yusuf Usta
-*/
 const {
   default: makeWASocket,
   useSingleFileAuthState,
@@ -20,15 +13,13 @@ const events = require("./lib/event");
 const { DataTypes } = require("sequelize");
 const got = require("got");
 const config = require("./config");
-const store = makeWASocket({ logger: pino().child({ level: "silent", stream: "store" }),});
-
 
 const { PluginDB } = require("./lib/sql/plugins");
 const { parseJid } = require("./lib");
-async function whatsAsena() {
+async function bot() {
   await config.DATABASE.sync();
   const { state, saveState } =  useSingleFileAuthState(
-    "./session.json",
+    "./hehe.json",
     pino({ level: "silent" })
   );
  
@@ -40,10 +31,6 @@ async function whatsAsena() {
     syncFullHistory: false,
     downloadHistory: false,
   });
-
-store.readFromFile("./lib/sql/store_multi.json");
-setInterval(() => { store.writeToFile("./lib/sql/store_multi.json")}, 30 * 1000);
-
 
   conn.ev.on("connection.update", async (s) => {
     const { connection, lastDisconnect } = s;
@@ -59,7 +46,7 @@ setInterval(() => { store.writeToFile("./lib/sql/store_multi.json")}, 30 * 1000)
       lastDisconnect.error.output.statusCode != 401
     ) {
       console.log(lastDisconnect.error.message);
-      whatsAsena();
+      bot();
     }
     if (connection === "open") {
       conn.sendMessage(conn.user.id, { text: "connected ✔✔" });
@@ -164,4 +151,4 @@ conn.sendMessage(data.id,{image:{url:userpp},caption:msg.replace(/{pp}/,''),ment
   });
 }
 
-whatsAsena();
+bot();
