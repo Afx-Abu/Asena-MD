@@ -26,7 +26,7 @@ const { parseJid } = require("./lib");
 async function whatsAsena() {
   await config.DATABASE.sync();
   const { state, saveState } =  useSingleFileAuthState(
-    "./hehe.json",
+    "./session.json",
     pino({ level: "silent" })
   );
  
