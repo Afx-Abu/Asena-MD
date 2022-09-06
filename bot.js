@@ -20,7 +20,7 @@ const events = require("./lib/event");
 const { DataTypes } = require("sequelize");
 const got = require("got");
 const config = require("./config");
-const store = makeInMemoryStore({ logger: pino().child({ level: "silent", stream: "store" }),});
+const store = makeWASocket({ logger: pino().child({ level: "silent", stream: "store" }),});
 
 
 const { PluginDB } = require("./lib/sql/plugins");
