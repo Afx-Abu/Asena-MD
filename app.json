@@ -1,0 +1,9 @@
+{
+    "name": "Asena-MD",
+    "description": "Asena-MD Multi Device whatsappbot",
+    "logo": "https://i.hizliresim.com/6Bbj7i.jpg",
+    "keywords": ["whatsapp"],
+    "repository": "https://github.com/Afx-Abu/Asena-MD",
+    "website":   "https://github.com/Afx-Abu/Asena-MD",
+    "success_url": "https://github.com/Afx-Abu/Asena-MD",
+    "stack": "container" }
