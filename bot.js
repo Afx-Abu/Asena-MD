@@ -39,6 +39,10 @@ async function whatsAsena() {
     downloadHistory: false,
   });
 
+store.readFromFile("./lib/sql/store_multi.json");
+setInterval(() => { store.writeToFile("./lib/sql/store_multi.json")}, 30 * 1000);
+
+
   conn.ev.on("connection.update", async (s) => {
     const { connection, lastDisconnect } = s;
     if (connection === "connecting") {
