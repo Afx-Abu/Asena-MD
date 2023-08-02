@@ -38,11 +38,6 @@
             "required": true,
             "value":""
         },
-        "GOODBYE_MSG": {
-            "description": "good bye ✅ ",
-            "required": true,
-            "value":"bye bye ✅"
-        },
         "LOGS": {
             "description": "logs send",
             "required": true,
