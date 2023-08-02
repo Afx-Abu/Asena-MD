@@ -8,19 +8,19 @@ const {
         Image,
         Message, 
         Sticker, 
-        Video,
-        Greetings,
+        Video,        
         serialize        
-} = require("./lib/base");
+} = require("./lib/");
+const { Greetings } = require("./lib/Greeting");
 let fs = require("fs");
 let config = require("./config");
 const pino = require("pino");
 logger = pino({ level: "silent" });
 const plugins = require("./lib/utils");
 
-fs.readdirSync(__dirname + "/lib/database/").forEach((db) => {
+fs.readdirSync(__dirname + "/lib/db/").forEach((db) => {
   if (path.extname(db).toLowerCase() == ".js") {
-    require(__dirname + "/lib/database/" + db);
+    require(__dirname + "/lib/db/" + db);
   }
 });
 async function Asena() {
@@ -142,7 +142,7 @@ async function Asena() {
       console.log(
         "Connection closed with bot. Please put New Session ID again."
       );
-      Asena().catch((err) => console.log(err));
+      Jsl().catch((err) => console.log(err));
     } else {
       /*
        */
@@ -157,4 +157,4 @@ async function Asena() {
   });
 }
 Asena();
-        
+             
