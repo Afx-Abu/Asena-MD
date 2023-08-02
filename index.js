@@ -11,7 +11,7 @@ const {
         Video,        
         serialize        
 } = require("./lib/");
-const { Greetings } = require("../lib/Greetings");
+const { Greetings } = require("./lib/Greetings");
 let fs = require("fs");
 let config = require("./config");
 const pino = require("pino");
