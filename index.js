@@ -137,14 +137,24 @@ async function Asena() {
         });
       });
     }
-    if (
-      connection === "close" &&
-      lastDisconnect &&
-      lastDisconnect.error &&
-      lastDisconnect.error.output.statusCode != 401
-    ) {
-      Asena();
+    if (connection === "close") {
+      console.log(s);
+      console.log(
+        "Connection closed with bot. Please put New Session ID again."
+      );
+      Asena().catch((err) => console.log(err));
+    } else {
+      /*
+       */
     }
+  });
+  process.on("uncaughtException", (err) => {
+    let error = err.message;
+    let errtex = `~_________~ ERROR REPORT ~______~ \n${error}` 
+   if (config.LOGS) {
+            conn.sendMessage(conn.user.id, { text: errtex });         
+        }                   
   });
 }
 Asena();
+        
