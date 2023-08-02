@@ -3,7 +3,7 @@ const { Asena, isPublic } = require("../lib/");
 Asena(
   {
     pattern: "ping",
-    fromMe: isPublic,
+    fromMe: false,
     desc: "Show your bot performance",
     type: "user",
   },
