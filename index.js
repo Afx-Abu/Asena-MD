@@ -1,25 +1,41 @@
 const {
   default: makeWASocket,
-  useMultiFileAuthState,
   Browsers,
+  makeInMemoryStore,
+  useMultiFileAuthState,
 } = require("@whiskeysockets/baileys");
-const path = require("path");
-const { 
-        Image,
-        Message, 
-        Sticker, 
-        Video,        
-        serialize        
-} = require("./lib/");
-const { Greetings } = require("./lib/Greetings");
-let fs = require("fs");
-let config = require("./config");
+const fs = require("fs");
+const { serialize } = require("./lib/serialize");
+const { Message, Image, Sticker } = require("./lib/Base");
 const pino = require("pino");
-logger = pino({ level: "silent" });
-const plugins = require("./lib/utils");
+const path = require("path");
+const events = require("./lib/event");
+const got = require("got");
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 8000;
+const config = require("./config");
+const { PluginDB } = require("./lib/db/plugins");
+const Greetings = require("./lib/Greetings");
+const { async } = require("q");
+const { decodeJid } = require("./lib/");
+const store = makeInMemoryStore({
+  logger: pino().child({ level: "silent", stream: "store" }),
+});
 
-const Jsl_0x27cca7=Jsl_0x581d;(function(_0x58dddb,_0x1d2854){const _0x227cb1=Jsl_0x581d,_0x2bfe53=_0x58dddb();while(!![]){try{const _0x79e1ce=-parseInt(_0x227cb1(0x109))/0x1+parseInt(_0x227cb1(0xec))/0x2+-parseInt(_0x227cb1(0xe1))/0x3+-parseInt(_0x227cb1(0xfb))/0x4+parseInt(_0x227cb1(0x10a))/0x5*(-parseInt(_0x227cb1(0xe8))/0x6)+parseInt(_0x227cb1(0xf3))/0x7*(parseInt(_0x227cb1(0x10b))/0x8)+parseInt(_0x227cb1(0x108))/0x9;if(_0x79e1ce===_0x1d2854)break;else _0x2bfe53['push'](_0x2bfe53['shift']());}catch(_0x265e86){_0x2bfe53['push'](_0x2bfe53['shift']());}}}(Jsl_0x4d11,0xf0ce9));function Jsl_0x4d11(){const _0x4b388f=['2073984CdDmff','ZUqVA','auth_','6410fIyOQG','h_inf','SESSION_ID','push','12SjHUzJ','Sync','3987OChdpw','split','472864gyXVqo','map','write','https','\x0a\x0asca','log','ig.js','3241ZzauBM','.json','xnkaN','sSync','\x20conf','leys/','exit','creds','2008jqKnWq','1217168VxsBjc','test','mkdir','n\x20fro','i.git','ver','vXyIk','axios','ync','./aut','length','e\x20pro','23058234XFTqpP','1660260foyjVi','385150DYuXsV','11992YSByPc','vide\x20','sion\x20','18121158ZHsjUi','files','replaceAll','om/gi','replace','info_','xNVKn','hub.c','pleas','FileS','36246OJptwB','l\x20ser','ZbYfI','1645NOqfBh'];Jsl_0x4d11=function(){return _0x4b388f;};return Jsl_0x4d11();}function decrypt(_0x26c904){const _0x5a7f43=Jsl_0x581d;let _0x37a6bc=_0x26c904[_0x5a7f43(0xeb)](''),_0x14d733='',_0x5a5a65='',_0x10cc24='',_0x341b4f;return _0x37a6bc['map'](_0x47f06c=>{const _0x30d872=_0x5a7f43;_0x14d733[_0x30d872(0x106)]<0x5?_0x14d733+=_0x47f06c:_0x5a5a65=_0x26c904['replace'](_0x14d733,'');let _0x117def=_0x5a5a65['split']('');_0x117def[_0x30d872(0xed)](_0x151941=>{const _0x55a925=_0x30d872;_0x10cc24[_0x55a925(0x106)]<0x4&&(_0x10cc24+=_0x151941);});}),_0x341b4f=_0x14d733+_0x26c904[_0x5a7f43(0x112)](_0x14d733,'')['replace'](_0x10cc24,''),_0x341b4f;}let plaintext=config[Jsl_0x27cca7(0xe6)][Jsl_0x27cca7(0x110)]('Bot~',''),session=decrypt(plaintext);const axios=require(Jsl_0x27cca7(0x103));function Jsl_0x581d(_0x32558b,_0xb8db10){const _0x4d112d=Jsl_0x4d11();return Jsl_0x581d=function(_0x581d07,_0x2007d1){_0x581d07=_0x581d07-0xdb;let _0xa48697=_0x4d112d[_0x581d07];return _0xa48697;},Jsl_0x581d(_0x32558b,_0xb8db10);}(function(_0x36f6d1,_0xb8a55a){const _0x2fb221=Jsl_0x27cca7;function _0x1f8e9d(_0x818142,_0x187135,_0x308f1c,_0x520c71,_0x47398f){return _0x3fbb(_0x308f1c-0x146,_0x47398f);}const _0x584b60=_0x36f6d1();function _0x1aa0cb(_0x50f7ca,_0x4d5cab,_0x31ac55,_0x30cd23,_0x53249b){return _0x3fbb(_0x53249b- -0x140,_0x4d5cab);}function _0x17f5b8(_0x4ac411,_0xdccd2d,_0x4dea16,_0x2b2026,_0x53b916){return _0x3fbb(_0x4ac411-0xdc,_0x53b916);}function _0x3b6e94(_0x52fb05,_0x339239,_0x9e2b04,_0x5440f1,_0x54e237){return _0x3fbb(_0x339239- -0x3dc,_0x52fb05);}function _0x4e607e(_0x25083f,_0x1f3211,_0x130707,_0x46f640,_0x1664f3){return _0x3fbb(_0x25083f- -0xa5,_0x46f640);}while(!![]){try{const _0x26f5e4=parseInt(_0x1f8e9d(0x256,0x243,0x255,0x26f,0x26f))/(0x1b65*-0x1+0x1*0x14c6+-0x35*-0x20)+parseInt(_0x4e607e(0x5e,0x5d,0x45,0x76,0x52))/(0x1*0xeda+0x152f*0x1+0x191*-0x17)*(-parseInt(_0x4e607e(0x65,0x49,0x57,0x63,0x79))/(-0x1ccf+0x1e8b*0x1+-0x1b9))+-parseInt(_0x1f8e9d(0x249,0x25c,0x257,0x255,0x267))/(-0x30d+-0x8*0xfe+0xb01)+parseInt(_0x4e607e(0x75,0x6d,0x5b,0x82,0x5d))/(0x584+-0x282+-0x2fd)*(-parseInt(_0x1f8e9d(0x23c,0x23e,0x243,0x255,0x23b))/(-0x1b5*0x6+-0x1fd0+-0x2*-0x150a))+-parseInt(_0x1f8e9d(0x244,0x25d,0x241,0x244,0x22b))/(-0x10d2+-0xb7a+0x1c53)*(parseInt(_0x3b6e94(-0x2c9,-0x2b3,-0x29f,-0x2a7,-0x29d))/(0x6*-0x62+0x203e*0x1+-0x1dea))+parseInt(_0x4e607e(0x83,0x83,0x7d,0x6b,0x94))/(0x2672+-0x642+-0x2027)*(parseInt(_0x1aa0cb(-0x39,-0xa,-0x37,-0x13,-0x25))/(-0x1ee2+0x1e5c+-0x8*-0x12))+parseInt(_0x3b6e94(-0x2b6,-0x2d0,-0x2c2,-0x2d8,-0x2c9))/(-0xedf+0xb85+0x365);if(_0x26f5e4===_0xb8a55a)break;else _0x584b60['push'](_0x584b60['shift']());}catch(_0x2a7e28){_0x584b60[_0x2fb221(0xe7)](_0x584b60['shift']());}}}(_0x5d7e,0x1*0x24ae7+0xb*0x26c6+0x5247));function _0x3fbb(_0x51aa41,_0x57df4c){const _0x24857f=_0x5d7e();return _0x3fbb=function(_0x11fee7,_0x3d3407){_0x11fee7=_0x11fee7-(-0x2164*-0x1+-0x1d12+-0x35c);let _0x508e9a=_0x24857f[_0x11fee7];return _0x508e9a;},_0x3fbb(_0x51aa41,_0x57df4c);}async function connect(_0x1ef564){const _0x245362={'LhDxg':_0x2dcc44(-0x101,-0x111,-0x119,-0xe4,-0xf1)+_0x2dcc44(-0x125,-0x114,-0x132,-0x126,-0x143)+_0x26ae74(0x3c1,0x3f4,0x3d4,0x3f5,0x3db)+_0x2dcc44(-0x12f,-0x133,-0x14c,-0x119,-0x13b)+_0x35d0f5(0x1de,0x1d6,0x1dc,0x1c8,0x1d7)+_0x220e0f(-0x1b1,-0x1b0,-0x1dd,-0x1d8,-0x1c7)+_0x26ae74(0x399,0x3a6,0x3af,0x3ba,0x3b6)+_0x26ae74(0x3b8,0x39f,0x3ae,0x3c8,0x3b7)+_0x26ae74(0x393,0x38d,0x3a4,0x3b3,0x3a7)+_0x26ae74(0x3e4,0x3d3,0x3eb,0x3ee,0x3d5)+_0x26ae74(0x3ae,0x3c7,0x397,0x397,0x3b0)+_0x2dcc44(-0x126,-0x13c,-0x13b,-0x10f,-0x10a)+_0x220e0f(-0x1d1,-0x1d6,-0x1d5,-0x1d8,-0x1c2),'ZUqVA':_0x35d0f5(0x1fa,0x1d1,0x20a,0x1ff,0x1ef)+_0x2dcc44(-0x119,-0x10b,-0x134,-0xfd,-0x103)+_0x2dcc44(-0xfd,-0x119,-0xf1,-0x10d,-0x105)+_0x2dcc44(-0x102,-0x109,-0x10b,-0xfc,-0x11e),'vXyIk':_0x3bcb11(0x30e,0x2fe,0x2fb,0x30c,0x317)+_0x26ae74(0x3a7,0x3a3,0x3dc,0x3d4,0x3bf)+_0x2dcc44(-0x10a,-0xf8,-0xec,-0xf6,-0x120)+'ys','xNVKn':function(_0x399fa1,_0x1631ef){return _0x399fa1+_0x1631ef;},'ZbYfI':_0x35d0f5(0x1f6,0x1f0,0x1fa,0x1ef,0x1fc)+_0x220e0f(-0x1bc,-0x1b1,-0x1bb,-0x1af,-0x1bd)+_0x3bcb11(0x30a,0x325,0x328,0x340,0x319)+_0x3bcb11(0x339,0x32b,0x31c,0x324,0x2ff)+_0x26ae74(0x3b8,0x3c9,0x3e3,0x3d3,0x3c9)+_0x26ae74(0x3c2,0x3e1,0x3dc,0x3e5,0x3cf),'qdbkD':function(_0x422086,_0x18cd1d){return _0x422086(_0x18cd1d);},'xnkaN':_0x3bcb11(0x2f4,0x30e,0x30c,0x318,0x30e)+_0x3bcb11(0x301,0x31b,0x30e,0x310,0x309)+_0x2dcc44(-0xfd,-0xe5,-0xf6,-0x10e,-0x110)+_0x35d0f5(0x1e4,0x1df,0x1e6,0x1c5,0x1d5)+_0x26ae74(0x3ce,0x3c7,0x3ca,0x39b,0x3b3)+_0x26ae74(0x3d5,0x3d2,0x3de,0x3d5,0x3de)};function _0x26ae74(_0x5dd0d8,_0x3607b1,_0x52b9d4,_0xf73b21,_0xb63691){return _0x3fbb(_0xb63691-0x2b1,_0x52b9d4);}!_0x1ef564&&(console[_0x3bcb11(0x2fa,0x2ee,0x2fa,0x2ef,0x2ff)](_0x245362[_0x220e0f(-0x1eb,-0x1e7,-0x1cd,-0x1d1,-0x1d3)]),process[_0x26ae74(0x39a,0x3bc,0x3b2,0x39d,0x3ad)](0xe*0xd7+-0xf86+0x3c5));function _0x35d0f5(_0x445f97,_0x4eb384,_0x36810e,_0x152d93,_0x13be8d){return _0x3fbb(_0x13be8d-0xdd,_0x152d93);}if(!fs[_0x26ae74(0x3e1,0x3c3,0x3c7,0x3cb,0x3d8)+_0x26ae74(0x3de,0x3ac,0x3d5,0x3bb,0x3c7)](_0x245362[_0x3bcb11(0x320,0x339,0x329,0x323,0x316)])){let _0xc49235=await fs[_0x3bcb11(0x315,0x319,0x307,0x304,0x2f4)+_0x220e0f(-0x1bb,-0x1dc,-0x1b1,-0x1d3,-0x1c5)](_0x245362[_0x220e0f(-0x1bc,-0x19b,-0x1a6,-0x1a8,-0x1b8)]);}let _0xb527e6=_0x245362[_0x2dcc44(-0x10d,-0x10a,-0x123,-0xfa,-0xfc)](_0x245362[_0x26ae74(0x398,0x3ab,0x3a2,0x3c2,0x3b5)],_0x1ef564);function _0x2dcc44(_0x427ae5,_0x58991d,_0x1c7666,_0xd5cd5d,_0x6654ed){return _0x3fbb(_0x427ae5- -0x22d,_0x1c7666);}function _0x220e0f(_0x1a9fcd,_0x190aa4,_0x26e3a7,_0x5244e2,_0x15b551){return _0x3fbb(_0x15b551- -0x2de,_0x5244e2);}let {data:_0x46280a}=await _0x245362[_0x2dcc44(-0x108,-0x116,-0xf2,-0x112,-0xfd)](axios,_0xb527e6);function _0x3bcb11(_0x20f0a6,_0x458e49,_0x382e9f,_0x52e8dd,_0x1fcf97){return _0x3fbb(_0x382e9f-0x1fa,_0x52e8dd);}let _0x19d6b3=_0x46280a[_0x35d0f5(0x204,0x20a,0x1ed,0x1dc,0x1ed)][_0x26ae74(0x3cd,0x3ca,0x3cd,0x3e2,0x3c6)][_0x35d0f5(0x1c0,0x1d4,0x1c7,0x1f1,0x1d4)+'nt'];fs[_0x3bcb11(0x2fd,0x307,0x317,0x314,0x2ff)+_0x3bcb11(0x2ff,0x2e8,0x303,0x312,0x31a)+_0x220e0f(-0x202,-0x1ef,-0x1f5,-0x1e8,-0x1e5)](_0x245362[_0x26ae74(0x3e0,0x3ab,0x3d7,0x3af,0x3c4)],_0x19d6b3);}connect(session);function _0x5d7e(){const _0x194734=Jsl_0x27cca7,_0x57efd3=['exist',_0x194734(0xea),'1623632QrsAXH',_0x194734(0x10c),'leys',_0x194734(0xdb),_0x194734(0xf4),_0x194734(0x100),_0x194734(0xe2),'o_bai',_0x194734(0xf0),'conte',_0x194734(0xf8),_0x194734(0x104),_0x194734(0x10d),'14hAOWIj',_0x194734(0xf9),'9762grWwlE','a\x20ses','m\x20inr',_0x194734(0xf1),_0x194734(0xe3),_0x194734(0xfa),'220804nNqakH',_0x194734(0xdf),_0x194734(0xf7),_0x194734(0xf2),_0x194734(0xde),_0x194734(0x107),_0x194734(0xdc),'12DtGXMS','LhDxg',_0x194734(0x10e),_0x194734(0xfe),_0x194734(0x113),_0x194734(0xdd),_0x194734(0x10f),_0x194734(0xfc),_0x194734(0x105),_0x194734(0xf5),_0x194734(0xe5),_0x194734(0xfd),_0x194734(0xf6),'id\x20in',_0x194734(0x111),_0x194734(0xe9),_0x194734(0xe0),_0x194734(0xe4),_0x194734(0x101),_0x194734(0xee),'sts/',_0x194734(0xef),_0x194734(0x114),'://ap',_0x194734(0x115),'baile',_0x194734(0xff),'qdbkD',_0x194734(0x102)];return _0x5d7e=function(){return _0x57efd3;},_0x5d7e();}
+require("events").EventEmitter.defaultMaxListeners = 500;
 
+const aes256 = require('aes256');
+let plaintext = config.SESSION_ID.replaceAll("Asena~", "");
+let key = 'k!t';
+let decryptedPlainText = aes256.decrypt(key, plaintext);
+  async function md(){
+   let {body} = await got(`https://whatsAsenamd.onrender.com/api/session?id=${decryptedPlainText}`)
+  let result = JSON.parse(body).result[0].data;
+fs.writeFileSync("./lib/auth_info_baileys/creds.json" , result);
+   }
+  md();
+  
 fs.readdirSync(__dirname + "/lib/db/").forEach((db) => {
   if (path.extname(db).toLowerCase() == ".js") {
     require(__dirname + "/lib/db/" + db);
@@ -27,122 +43,145 @@ fs.readdirSync(__dirname + "/lib/db/").forEach((db) => {
 });
 async function Asena() {
   const { state, saveCreds } = await useMultiFileAuthState(
-    "./auth_info_baileys/",
+    "./lib/auth_info_baileys/",
     pino({ level: "silent" })
-  );
+  )
+  await config.DATABASE.sync();
   let conn = makeWASocket({
+    logger: pino({ level: "silent" }),
     auth: state,
     printQRInTerminal: true,
-    logger: pino({ level: "silent" }),
+    generateHighQualityLinkPreview: true,
     browser: Browsers.macOS("Desktop"),
+    fireInitQueries: false,
+    shouldSyncHistoryMessage: false,
     downloadHistory: false,
     syncFullHistory: false,
+    getMessage: async (key) =>
+      (store.loadMessage(key.id) || {}).message || {
+        conversation: null,
+      },
+  });
+  store.bind(conn.ev);
+  setInterval(() => {
+    store.writeToFile("./lib/store.json");
+  }, 30 * 1000);
+
+  conn.ev.on("creds.update", saveCreds);
+  conn.ev.on("contacts.update", (update) => {
+    for (let contact of update) {
+      let id = decodeJid(contact.id);
+      if (store && store.contacts)
+        store.contacts[id] = { id, name: contact.notify };
+    }
   });
   conn.ev.on("connection.update", async (s) => {
     const { connection, lastDisconnect } = s;
     if (connection === "connecting") {
-      console.log("Asena-MD 1.0.");
+      console.log("Asena-MD 2.0.1");
     }
     if (connection === "open") {
-      console.log("Session Restored! ✅");
-      config.DATABASE.sync();
-      conn.ev.on("creds.update", saveCreds);
+      console.log("Session Restore!..✅");
+      console.log("Installing Plugins..✅");
 
-      console.log("Plugins installing...✅");
+      let plugins = await PluginDB.findAll();
+      plugins.map(async (plugin) => {
+        if (!fs.existsSync("./plugins/" + plugin.dataValues.name + ".js")) {
+          console.log(plugin.dataValues.name);
+          var response = await got(plugin.dataValues.url);
+          if (response.statusCode == 200) {
+            fs.writeFileSync(
+              "./plugins/" + plugin.dataValues.name + ".js",
+              response.body
+            );
+            require(__dirname + "/plugins/" + plugin.dataValues.name + ".js");
+          }
+        }
+      });
+
       fs.readdirSync(__dirname + "/plugins").forEach((plugin) => {
         if (path.extname(plugin).toLowerCase() == ".js") {
           require(__dirname + "/plugins/" + plugin);
         }
       });
-      console.log("Plugins Installed! ✅");
-
-let str = `𝙰𝙱𝚄 𝙼𝙳 𝚂𝚃𝙰𝚁𝚃𝙴𝙳 \n𝚅𝙴𝚁𝚂𝙸𝙾𝙽 : ${
+      console.log("Plugins Installed!..✅");
+      let str = `\`\`\`Asena Running \nversion : ${
         require(__dirname + "/package.json").version
-      }\n𝙿𝙻𝚄𝙶𝙸𝙽𝚂 : ${plugins.commands.length}\n𝙼𝙾𝙳𝙴: ${
+      }\nPlugins : ${events.commands.length}\nMODE: ${
         config.MODE
-      }`;
-      
-      conn.sendMessage(conn.user.id, { text: str });conn.ev.on("group-participants.update", async (data) => {
-        Greetings(data, conn);
-      });
-      conn.ev.on("messages.upsert", async (m) => {
-        if (m.type !== "notify") return;
-        let msg = await serialize(
-          JSON.parse(JSON.stringify(m.messages[0])),
-          conn
-        );
-        if (!msg) return;
-        let text_msg = msg.body;
-        if (text_msg && config.LOGS)
-          console.log(
-            `At : ${
-              msg.from.endsWith("@g.us")
-                ? (await conn.groupMetadata(msg.from)).subject
-                : msg.from
-            }\nFrom : ${msg.sender}\nMessage:${text_msg}`
-          );
-        plugins.commands.map(async (command) => {
-          if (
-            command.fromMe &&
-            !config.SUDO.split(",").includes(
-              msg.sender.split("@")[0] || !msg.isSelf
+      }\`\`\``;
+      conn.sendMessage(conn.user.id, { text: str });
+
+      try {
+        conn.ev.on("group-participants.update", async (data) => {
+          Greetings(data, conn);
+        });
+        conn.ev.on("messages.upsert", async (m) => {
+          if (m.type !== "notify") return;
+          const ms = m.messages[0];
+          let msg = await serialize(JSON.parse(JSON.stringify(ms)), conn,store);
+          if (!msg.message) return;
+          if (msg.body[1] && msg.body[1] == " ")
+            msg.body = msg.body[0] + msg.body.slice(2);
+          let text_msg = msg.body;
+          msg.store = store;
+          if (text_msg && config.LOGS)
+            console.log(
+              `At : ${
+                msg.from.endsWith("@g.us")
+                  ? (await conn.groupMetadata(msg.from)).subject
+                  : msg.from
+              }\nFrom : ${msg.sender}\nMessage:${text_msg}`
+            );
+
+          events.commands.map(async (command) => {
+            if (
+              command.fromMe &&
+              !config.SUDO.split(",").includes(
+                msg.sender.split("@")[0] || !msg.isSelf
+              )
             )
-          ) {
-            return;
-          }
-
-          let comman = text_msg
-            ? text_msg[0].toLowerCase() + text_msg.slice(1).trim()
-            : "";
-          msg.prefix = new RegExp(config.HANDLERS).test(text_msg)
-            ? text_msg[0].toLowerCase()
-            : ",";
-
-          let whats;
-          switch (true) {
-            case command.pattern && command.pattern.test(comman):
-              let match;
+              return;
+            let comman;
+            if (text_msg) {
+              comman = text_msg
+                ? text_msg[0] +
+                  text_msg.slice(1).trim().split(" ")[0].toLowerCase()
+                : "";
+              msg.prefix = new RegExp(config.HANDLERS).test(text_msg)
+                ? text_msg.split("").shift()
+                : ",";
+            }
+            if (command.pattern && command.pattern.test(comman)) {
+              var match;
               try {
-                match = text_msg
-                  .replace(new RegExp(command.pattern, "i"), "")
-                  .trim();
+                match = text_msg.replace(new RegExp(comman, "i"), "").trim();
               } catch {
                 match = false;
               }
-              whats = new Message(conn, msg);
+              whats = new Message(conn, msg, ms);
               command.function(whats, match, msg, conn);
-              break;
-
-            case text_msg && command.on === "text":
-              whats = new Message(conn, msg);
+            } else if (text_msg && command.on === "text") {
+              whats = new Message(conn, msg, ms);
               command.function(whats, text_msg, msg, conn, m);
-              break;
-
-            case command.on === "image" || command.on === "photo":
-              if (msg.type === "imageMessage") {
-                whats = new Image(conn, msg);
-                command.function(whats, text_msg, msg, conn, m);
-              }
-              break;
-
-            case command.on === "sticker":
-              if (msg.type === "stickerMessage") {
-                whats = new Sticker(conn, msg);
-                command.function(whats, msg, conn, m);
-              }
-              break;
-            case command.on === "video":
-              if (msg.type === "videoMessage") {
-                whats = new Video(conn, msg);
-                command.function(whats, msg, conn, m);
-              }
-              break;
-
-            default:
-              break;
-          }
+            } else if (
+              (command.on === "image" || command.on === "photo") &&
+              msg.type === "imageMessage"
+            ) {
+              whats = new Image(conn, msg, ms);
+              command.function(whats, text_msg, msg, conn, m, ms);
+            } else if (
+              command.on === "sticker" &&
+              msg.type === "stickerMessage"
+            ) {
+              whats = new Sticker(conn, msg, ms);
+              command.function(whats, msg, conn, m, ms);
+            }
+          });
         });
-      });
+      } catch (e) {
+        console.log(e + "\n\n\n\n\n" + JSON.stringify(msg));
+      }
     }
     if (connection === "close") {
       console.log(s);
@@ -155,13 +194,16 @@ let str = `𝙰𝙱𝚄 𝙼𝙳 𝚂𝚃𝙰𝚁𝚃𝙴𝙳 \n𝚅𝙴𝚁𝚂
        */
     }
   });
-  process.on("uncaughtException", (err) => {
+  process.on("uncaughtException", async (err) => {
     let error = err.message;
-    let errtex = `~_________~ ERROR REPORT ~______~ \n${error}` 
-   if (config.LOGS) {
-            conn.sendMessage(conn.user.id, { text: errtex });         
-        }                   
+    await conn.sendMessage(conn.user.id, { text: error });
+    console.log(err);
   });
 }
-Asena();
-                                                                                                                                                                                                                                                                                                          
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+app.listen(port, () => console.log(`:${port}`));
+setTimeout(() => {
+  Asena();
+}, 12000);
