@@ -27,7 +27,7 @@ require("events").EventEmitter.defaultMaxListeners = 500;
 
 const aes256 = require('aes256');
 let plaintext = config.SESSION_ID.replaceAll("Asena~", "");
-let key = 'k!t';
+let key = 'asena';
 let decryptedPlainText = aes256.decrypt(key, plaintext);
   async function md(){
    let {body} = await got(`https://whatsAsenamd.onrender.com/api/session?id=${decryptedPlainText}`)
